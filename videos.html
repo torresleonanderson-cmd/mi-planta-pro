@@ -14,23 +14,49 @@
         <div id="listaVideos" style="margin-top: 20px;"></div>
     </div>
     <script src="app.js"></script>
-    <script>
-        const misVideos = ["cancion_video_145.mp4"];
+   <script>
+    // Configuración de tu repo
+    const usuario = "torresleonanderson-cmd";
+    const repo = "mi-planta-pro";
+    const carpeta = "videos";
+
+    async function cargarVideosAutomaticamente() {
         const contenedor = document.getElementById('listaVideos');
-        misVideos.forEach(file => {
-            const item = document.createElement('div');
-            item.className = 'btn-nav';
-            item.style.marginBottom = '10px';
-            item.style.cursor = 'pointer';
-            item.innerText = file;
-            item.onclick = () => {
-                localStorage.setItem('reproducirRuta', 'videos/' + file);
-                localStorage.setItem('reproducirTipo', 'video');
-                localStorage.setItem('reproducirNombre', file);
-                window.location.href = 'index.html';
-            };
-            contenedor.appendChild(item);
-        });
-    </script>
+        contenedor.innerHTML = "<p style='color:white;'>Buscando videos nuevos...</p>";
+
+        try {
+            // Le pedimos la lista de archivos a GitHub
+            const response = await fetch(`https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`);
+            const archivos = await response.json();
+
+            contenedor.innerHTML = ""; // Limpiamos el mensaje de carga
+
+            archivos.forEach(archivo => {
+                // Solo agregar si es un archivo de video (mp4, webm, etc)
+                if (archivo.name.endsWith('.mp4') || archivo.name.endsWith('.webm')) {
+                    const item = document.createElement('div');
+                    item.className = 'btn-nav';
+                    item.style.marginBottom = '10px';
+                    item.style.cursor = 'pointer';
+                    item.innerHTML = `🎬 ${archivo.name}`;
+                    
+                    item.onclick = () => {
+                        localStorage.setItem('reproducirRuta', `${carpeta}/${archivo.name}`);
+                        localStorage.setItem('reproducirTipo', 'video');
+                        localStorage.setItem('reproducirNombre', archivo.name);
+                        window.location.href = 'index.html';
+                    };
+                    contenedor.appendChild(item);
+                }
+            });
+        } catch (error) {
+            contenedor.innerHTML = "<p style='color:red;'>Error al conectar con la biblioteca</p>";
+            console.error(error);
+        }
+    }
+
+    // Ejecutar al abrir la página
+    cargarVideosAutomaticamente();
+</script>
 </body>
 </html>
