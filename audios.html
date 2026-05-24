@@ -14,23 +14,45 @@
         <div id="listaCanciones" style="margin-top: 20px;"></div>
     </div>
     <script src="app.js"></script>
-    <script>
-        const misAudios = ["cancion_audio_60.mp3"];
+   <script>
+    const usuario = "torresleonanderson-cmd";
+    const repo = "mi-planta-pro";
+    const carpeta = "audios";
+
+    async function cargarAudiosAutomaticamente() {
         const contenedor = document.getElementById('listaCanciones');
-        misAudios.forEach(file => {
-            const item = document.createElement('div');
-            item.className = 'btn-nav';
-            item.style.marginBottom = '10px';
-            item.style.cursor = 'pointer';
-            item.innerText = file;
-            item.onclick = () => {
-                localStorage.setItem('reproducirRuta', 'audios/' + file);
-                localStorage.setItem('reproducirTipo', 'audio');
-                localStorage.setItem('reproducirNombre', file);
-                window.location.href = 'index.html';
-            };
-            contenedor.appendChild(item);
-        });
-    </script>
+        contenedor.innerHTML = "<p style='color:white;'>Buscando música nueva...</p>";
+
+        try {
+            const response = await fetch(`https://api.github.com/repos/${usuario}/${repo}/contents/${carpeta}`);
+            const archivos = await response.json();
+
+            contenedor.innerHTML = "";
+
+            archivos.forEach(archivo => {
+                // Solo agregar si es un archivo de audio (mp3, wav)
+                if (archivo.name.endsWith('.mp3') || archivo.name.endsWith('.wav')) {
+                    const item = document.createElement('div');
+                    item.className = 'btn-nav';
+                    item.style.marginBottom = '10px';
+                    item.style.cursor = 'pointer';
+                    item.innerHTML = `♫ ${archivo.name}`;
+                    
+                    item.onclick = () => {
+                        localStorage.setItem('reproducirRuta', `${carpeta}/${archivo.name}`);
+                        localStorage.setItem('reproducirTipo', 'audio');
+                        localStorage.setItem('reproducirNombre', archivo.name);
+                        window.location.href = 'index.html';
+                    };
+                    contenedor.appendChild(item);
+                }
+            });
+        } catch (error) {
+            contenedor.innerHTML = "<p style='color:red;'>Error al conectar con la biblioteca</p>";
+        }
+    }
+
+    cargarAudiosAutomaticamente();
+</script>
 </body>
 </html>
