@@ -213,6 +213,29 @@ function lanzarExito(nombre) {
     setTimeout(cerrarModal, 3000);
 }
 
+
+// --- LÓGICA TÁCTIL PARA MÓVILES ---
+const tvPantalla = document.getElementById('contenedorPrincipal');
+const controlesOverlay = document.getElementById('controlesOverlay');
+
+// Al tocar la pantalla del TV, mostramos/ocultamos los controles
+tvPantalla.addEventListener('click', (e) => {
+    // Si el clic no fue en un botón, alternamos la visibilidad
+    if (e.target.tagName !== 'BUTTON') {
+        controlesOverlay.classList.toggle('show-mobile');
+    }
+});
+
+// Ocultar controles automáticamente después de 4 segundos si se están mostrando
+setInterval(() => {
+    if (controlesOverlay.classList.contains('show-mobile')) {
+        const media = getActiveMedia();
+        if (!media.paused) { // Solo si está reproduciendo
+            controlesOverlay.classList.remove('show-mobile');
+        }
+    }
+}, 4000);
+
 function cerrarModal() {
     modal.classList.remove('active');
 }
