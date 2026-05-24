@@ -226,3 +226,87 @@ video:fullscreen {
     color: #aaa;
     margin-right: 15px;
 }
+
+/* ==========================================
+   DISEÑO PARA CELULARES (RESPONSIVE)
+   ========================================== */
+
+@media (max-width: 850px) {
+    /* La estación pasa de 2 columnas a 1 sola */
+    .estacion-multimedia {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        gap: 20px;
+        width: 100%;
+        border-radius: 0; /* Pantalla completa en móvil */
+    }
+
+    body {
+        padding: 0;
+        align-items: flex-start; /* Permite scroll hacia abajo */
+    }
+
+    /* Ajustes en la Planta (Consola) */
+    .planta-contenedor {
+        padding: 15px;
+        border-left: 4px solid #222;
+        border-right: 4px solid #222;
+    }
+
+    .marca h2 {
+        font-size: 1.2rem;
+    }
+
+    .eq-grid {
+        gap: 10px;
+    }
+
+    .knob-box label {
+        font-size: 0.7rem;
+    }
+
+    /* Ajustes en el Televisor */
+    .tv-exterior {
+        border-width: 6px; /* Bordes más delgados en móvil */
+    }
+
+    /* Hacer los botones del TV más grandes para los dedos */
+    .btn-tv {
+        font-size: 1.5rem; 
+        padding: 12px;
+    }
+
+    .time-text {
+        font-size: 0.6rem;
+    }
+
+    /* Los botones de abajo (Mute/Stop) */
+    .botones-planta {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .btn-planta {
+        font-size: 0.8rem;
+        padding: 12px 5px;
+    }
+
+    /* Navegación (Botones de Biblioteca) */
+    .menu-navegacion {
+        grid-template-columns: 1fr; /* Uno debajo del otro */
+    }
+
+    .btn-nav {
+        padding: 15px;
+    }
+
+    /* Ajuste del Vúmetro para que no se vea gigante */
+    #vumetro {
+        height: 80px;
+    }
+}
+
+/* Fix para que los controles del TV se vean al tocar en móvil */
+.tv-controls-overlay.show-mobile {
+    opacity: 1 !important;
+}
