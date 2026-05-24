@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio System Pro v2.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="estacion-multimedia">
+        <!-- SECCIÓN IZQUIERDA: LA PLANTA (CONSOLA) -->
+        <div class="planta-contenedor">
+            <div class="planta-header">
+                <div class="marca">
+                    <h2>AUDIO SYSTEM <span class="highlight">PRO</span></h2>
+                    <p class="subtitle">ULTRA-LOW LATENCY DIGITAL PROCESSOR</p>
+                </div>
+                <div class="led-grupo">
+                    <div class="led-item">
+                        <span class="led-label">SIGNAL</span>
+                        <div class="led led-signal" id="ledSignal"></div>
+                    </div>
+                    <div class="led-item">
+                        <span class="led-label">POWER</span>
+                        <div class="led led-power encendido"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vumetro-seccion">
+                <div class="vumetro-label">MAIN OUTPUT LEVEL (L/R)</div>
+                <canvas id="vumetro"></canvas>
+            </div>
+
+            <div class="panel-controles">
+                <div class="control-main">
+                    <label>MASTER VOLUME</label>
+                    <div class="fader-wrapper">
+                        <input type="range" id="controlVolumen" min="0" max="2" step="0.01" value="1">
+                        <span id="valVolumen" class="display-digital">100%</span>
+                    </div>
+                </div>
+
+                <div class="eq-grid">
+                    <div class="knob-box">
+                        <label>LOW</label>
+                        <input type="range" id="controlBajos" min="-12" max="12" value="0">
+                        <span id="valBajos" class="val-eq">0dB</span>
+                    </div>
+                    <div class="knob-box">
+                        <label>MID</label>
+                        <input type="range" id="controlMedios" min="-12" max="12" value="0">
+                        <span id="valMedios" class="val-eq">0dB</span>
+                    </div>
+                    <div class="knob-box">
+                        <label>HIGH</label>
+                        <input type="range" id="controlBrillos" min="-12" max="12" value="0">
+                        <span id="valBrillos" class="val-eq">0dB</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones-planta">
+                <button id="btnMute" class="btn-planta btn-danger">MUTE</button>
+                <button id="btnBoost" class="btn-planta btn-action">X-BASS</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DERECHA: EL TELEVISOR -->
+        <div class="modulo-media">
+            <div class="tv-exterior">
+                <div class="tv-pantalla-area">
+                    <video id="videoElement" crossorigin="anonymous"></video>
+                    <audio id="audioElement" crossorigin="anonymous"></audio>
+                    <!-- Capa decorativa de interferencia -->
+                    <div class="tv-overlay"></div>
+                </div>
+                <div class="tv-status-bar">
+                    <div class="status-indicator">LIVE</div>
+                    <marquee id="txtEstado">SISTEMA LISTO - SELECCIONE MEDIA</marquee>
+                </div>
+            </div>
+
+            <div class="menu-navegacion">
+                <a href="audios.html" class="btn-nav audio-btn">
+                    <span class="icon">♫</span> BIBLIOTECA AUDIO
+                </a>
+                <a href="videos.html" class="btn-nav video-btn">
+                    <span class="icon">▶</span> BIBLIOTECA VIDEO
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ÉXITO -->
+    <div id="modalExito" class="modal-overlay">
+        <div class="modal-content">
+            <div class="check-anim">✓</div>
+            <h3>CARGA COMPLETA</h3>
+            <p id="modalMsg">Archivo listo para procesar</p>
+            <button onclick="cerrarModal()" class="btn-modal-ok">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

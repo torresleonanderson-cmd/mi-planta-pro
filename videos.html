@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display:block; padding: 40px;">
+    <div style="max-width: 600px; margin: auto; background: var(--panel-color); padding: 30px; border-radius: 20px; border: 1px solid #333;">
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <h1 style="color: var(--accent-cyan);">▶ VIDEOS</h1>
+            <a href="index.html" class="btn-nav" style="padding: 10px 20px;">ATRÁS</a>
+        </div>
+        <div id="listaVideos" style="margin-top: 20px;"></div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        const misVideos = ["cancion_video_145.mp4"];
+        const contenedor = document.getElementById('listaVideos');
+        misVideos.forEach(file => {
+            const item = document.createElement('div');
+            item.className = 'btn-nav';
+            item.style.marginBottom = '10px';
+            item.style.cursor = 'pointer';
+            item.innerText = file;
+            item.onclick = () => {
+                localStorage.setItem('reproducirRuta', 'videos/' + file);
+                localStorage.setItem('reproducirTipo', 'video');
+                localStorage.setItem('reproducirNombre', file);
+                window.location.href = 'index.html';
+            };
+            contenedor.appendChild(item);
+        });
+    </script>
+</body>
+</html>
