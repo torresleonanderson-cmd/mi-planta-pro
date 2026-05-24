@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio System Pro v2.0</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Fuentes para estilo digital/moderno -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="estacion-multimedia">
-        <!-- SECCIÓN IZQUIERDA: LA PLANTA (CONSOLA) -->
+        
+        <!-- SECCIÓN IZQUIERDA: LA PLANTA (CONSOLA DIGITAL) -->
         <div class="planta-contenedor">
             <div class="planta-header">
                 <div class="marca">
@@ -62,26 +64,49 @@
                 </div>
             </div>
 
-           <!-- Busca la clase .botones-planta y cámbiala por esta -->
-<div class="botones-planta">
-    <button id="btnMute" class="btn-planta btn-danger">MUTE</button>
-    <button id="btnStop" class="btn-planta">STOP ■</button> <!-- BOTÓN STOP -->
-    <button id="btnFullscreen" class="btn-planta btn-action">FULLSCREEN ⛶</button> <!-- BOTÓN FULLSCREEN -->
-</div>
+            <div class="botones-planta">
+                <button id="btnMute" class="btn-planta btn-danger">MUTE</button>
+                <button id="btnStop" class="btn-planta">STOP ■</button>
+            </div>
         </div>
 
-        <!-- SECCIÓN DERECHA: EL TELEVISOR -->
+        <!-- SECCIÓN DERECHA: EL TELEVISOR CON CONTROLES PERSONALIZADOS -->
         <div class="modulo-media">
             <div class="tv-exterior">
-                <div class="tv-pantalla-area">
+                <!-- Contenedor principal de la pantalla -->
+                <div class="tv-pantalla-area" id="contenedorPrincipal">
+                    
                     <video id="videoElement" crossorigin="anonymous"></video>
                     <audio id="audioElement" crossorigin="anonymous"></audio>
+                    
                     <!-- Capa decorativa de interferencia -->
                     <div class="tv-overlay"></div>
+
+                    <!-- NUEVOS CONTROLES FLOTANTES (Se activan al pasar el mouse) -->
+                    <div class="tv-controls-overlay" id="controlesOverlay">
+                        <!-- Barra de Progreso -->
+                        <div class="progress-container" id="progressContainer">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+
+                        <!-- Fila de Botones -->
+                        <div class="buttons-row">
+                            <div class="left-btns">
+                                <button class="btn-tv" id="btnPlayPause">▶</button>
+                                <button class="btn-tv" id="btnRetroceder">⟲ 10s</button>
+                                <button class="btn-tv" id="btnAdelantar">⟳ 10s</button>
+                            </div>
+                            <div class="right-btns">
+                                <span id="timeDisplay" class="time-text">00:00 / 00:00</span>
+                                <button class="btn-tv" id="btnTvFullscreen">⛶</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="tv-status-bar">
                     <div class="status-indicator">LIVE</div>
-                    <marquee id="txtEstado">SISTEMA LISTO - SELECCIONE MEDIA</marquee>
+                    <marquee id="txtEstado">SISTEMA LISTO - SELECCIONE MEDIA EN BIBLIOTECA</marquee>
                 </div>
             </div>
 
@@ -94,18 +119,21 @@
                 </a>
             </div>
         </div>
+
     </div>
 
-    <!-- MODAL DE ÉXITO -->
+    <!-- VENTANA MODAL DE ÉXITO -->
     <div id="modalExito" class="modal-overlay">
         <div class="modal-content">
             <div class="check-anim">✓</div>
-            <h3>CARGA COMPLETA</h3>
-            <p id="modalMsg">Archivo listo para procesar</p>
-            <button onclick="cerrarModal()" class="btn-modal-ok">ENTENDIDO</button>
+            <h3>CARGA EXITOSA</h3>
+            <p id="modalMsg">Procesando archivo multimedia...</p>
+            <button onclick="cerrarModal()" class="btn-modal-ok">CONTINUAR</button>
         </div>
     </div>
 
+    <!-- Script principal -->
     <script src="app.js"></script>
+
 </body>
 </html>
