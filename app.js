@@ -184,3 +184,66 @@ btnMute.onclick = () => {
     btnMute.classList.toggle('btn-danger');
     btnMute.innerText = audioElement.muted ? "UNMUTE" : "MUTE";
 };
+
+
+// --- NUEVOS ELEMENTOS DE LA UI DEL VIDEO ---
+const btnPlayPause = document.getElementById('btnPlayPause');
+const btnRetroceder = document.getElementById('btnRetroceder');
+const btnAdelantar = document.getElementById('btnAdelantar');
+const btnTvFullscreen = document.getElementById('btnTvFullscreen');
+const progressBar = document.getElementById('progressBar');
+const timeDisplay = document.getElementById('timeDisplay');
+
+// Función para obtener el elemento activo (video o audio)
+function getActiveMedia() {
+    return videoElement.style.display !== 'none' ? videoElement : audioElement;
+}
+
+// Botón Play / Pausa
+btnPlayPause.onclick = () => {
+    const media = getActiveMedia();
+    if (media.paused) {
+        media.play();
+        btnPlayPause.innerText = "⏸";
+    } else {
+        media.pause();
+        btnPlayPause.innerText = "▶";
+    }
+};
+
+// Retroceder y Adelantar 10 segundos
+btnRetroceder.onclick = () => { getActiveMedia().currentTime -= 10; };
+btnAdelantar.onclick = () => { getActiveMedia().currentTime += 10; };
+
+// Pantalla Completa (Del contenedor para que se vean los controles personalizados)
+btnTvFullscreen.onclick = () => {
+    const container = document.getElementById('contenedorPrincipal');
+    if (container.requestFullscreen) container.requestFullscreen();
+    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+};
+
+// Actualizar barra de progreso y tiempo
+function actualizarProgreso() {
+    const media = getActiveMedia();
+    if (!media.duration) return;
+    
+    const porcentaje = (media.currentTime / media.duration) * 100;
+    progressBar.style.width = porcentaje + "%";
+
+    // Formatear tiempo (00:00)
+    const formatTime = (time) => {
+        const min = Math.floor(time / 60);
+        const sec = Math.floor(time % 60);
+        return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    };
+
+    timeDisplay.innerText = `${formatTime(media.currentTime)} / ${formatTime(media.duration)}`;
+}
+
+// Escuchar los eventos del video y audio
+videoElement.ontimeupdate = actualizarProgreso;
+audioElement.ontimeupdate = actualizarProgreso;
+
+// Reiniciar icono de play cuando termine
+videoElement.onended = () => btnPlayPause.innerText = "▶";
+audioElement.onended = () => btnPlayPause.innerText = "▶";
