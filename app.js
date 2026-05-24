@@ -137,3 +137,50 @@ document.getElementById('controlBajos').oninput = (e) => {
     if (filtroBajos) filtroBajos.gain.value = e.target.value;
 };
 // Repetir similar para Medios y Brillos...
+
+// --- NUEVOS ELEMENTOS ---
+const btnStop = document.getElementById('btnStop');
+const btnFullscreen = document.getElementById('btnFullscreen');
+const tvExterior = document.querySelector('.tv-exterior'); // Usamos el contenedor para que se vea con marco
+
+// --- LÓGICA PARA PARAR (STOP) ---
+btnStop.onclick = () => {
+    // Paramos ambos elementos
+    audioElement.pause();
+    videoElement.pause();
+    
+    // Reiniciamos el tiempo a cero
+    audioElement.currentTime = 0;
+    videoElement.currentTime = 0;
+    
+    // Actualizamos el texto de estado
+    txtEstado.innerHTML = "■ REPRODUCCIÓN DETENIDA - SISTEMA EN ESPERA";
+    
+    // Opcional: Ocultar el video si quieres que la pantalla quede negra
+    videoElement.style.display = 'none';
+};
+
+// --- LÓGICA PARA PANTALLA COMPLETA ---
+btnFullscreen.onclick = () => {
+    // Si hay un video cargado, lo ponemos en grande
+    if (videoElement.src) {
+        if (videoElement.requestFullscreen) {
+            videoElement.requestFullscreen();
+        } else if (videoElement.webkitRequestFullscreen) { /* Safari */
+            videoElement.webkitRequestFullscreen();
+        } else if (videoElement.msRequestFullscreen) { /* IE11 */
+            videoElement.msRequestFullscreen();
+        }
+    } else {
+        alert("Primero selecciona un video en la biblioteca.");
+    }
+};
+
+// --- REPASO AL BOTÓN MUTE (Por si no lo tenías configurado) ---
+const btnMute = document.getElementById('btnMute');
+btnMute.onclick = () => {
+    audioElement.muted = !audioElement.muted;
+    videoElement.muted = !videoElement.muted;
+    btnMute.classList.toggle('btn-danger');
+    btnMute.innerText = audioElement.muted ? "UNMUTE" : "MUTE";
+};
